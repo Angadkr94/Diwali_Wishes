@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .button {
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #ff9800; /* Change to a vibrant orange */
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        }
+
+        h1 {
+            margin: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin: 20px;
+        }
+        .update-name {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #ff9800;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .name-input {
+            display: none;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="header">Wish Happy Diwali, <span id="name">Ankit</span>!</h1>
+    <p id="text">This is a celebration of lights and joy!</p>
+    
+    <button class="button" onclick="changeBackground()">Change Background</button>
+    <button class="button" onclick="changeText()">More Wishes</button>
+    
+    <button class="update-name" onclick="openNameInput()">Update Name</button>
+    
+    <div class="name-input" id="nameInputContainer">
+        <input type="text" id="nameInput" placeholder="Enter new name" />
+        <button class="button" onclick="updateName()">Save</button>
+    </div>
+
+    <script>
+        const backgrounds = [
+            'images/diwali1.jpg',
+            'images/Diwali2.gif',
+            'images/Diwali3.jpeg',
+            'images/Diwali4.jpeg',
+            'images/Diwali5.gif',
+            'images/Diwali6.jpeg',
+            'images/Diwali7.jpeg',
+            'images/Diwali8.jpeg',
+            'images/third-image.gif',
+        ];
+
+        const texts = [
+            "May this festival of lights bring you joy, peace, and prosperity!",
+            "Wishing you a joyous Diwali filled with happiness and wealth!",
+            "May the light of Diwali fill your home with joy and warmth!",
+            "Wishing you and your family a blessed Diwali!",
+            "May this Diwali bring new happiness, new goals, and new achievements!",
+            "May the divine light of Diwali bring peace, prosperity, and happiness to your life. Shine on and have a joyous Diwali!",
+            "Wish you are blessed with peace, prosperity, happiness, good health, and grand success. Happy Diwali!",
+            "May Maa Lakshmi and Lord Ganesh bless your life and illuminate your home with prosperity, happiness, wealth, and endless joy. Happy Diwali!",
+            "May the warmth and brightness of the Diwali lights surround you and your family with positive energy, love, and endless joy!",
+            "Wishing you a Diwali filled with beautiful beginnings, new hopes, and lots of happy moments. May your life be as colourful and bright as the rangoli!",
+        ];
+
+        let currentBackgroundIndex = 0;
+        let currentTextIndex = 0;
+
+        function changeBackground() {
+            currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+            document.body.style.backgroundImage = `url(${backgrounds[currentBackgroundIndex]})`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+        }
+
+        function changeText() {
+            currentTextIndex = (currentTextIndex + 1) % texts.length;
+            document.getElementById('text').innerText = texts[currentTextIndex];
+            document.body.style.color = getRandomColor();
+            document.getElementById('header').style.color = getRandomColor();
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function openNameInput() {
+            document.getElementById('nameInputContainer').style.display = 'block';
+            document.getElementById('nameInput').value = ''; // Clear the input
+        }
+
+        function updateName() {
+            const newName = document.getElementById('nameInput').value;
+            if (newName) {
+                document.getElementById('name').innerText = newName; // Update name in header
+                document.getElementById('nameInputContainer').style.display = 'none'; // Hide input after saving
+            }
+        }
+
+        // Initial setup
+        changeBackground();
+    </script>
+</body>
+</html>
