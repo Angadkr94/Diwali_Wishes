@@ -29,9 +29,6 @@
             background-position: center; /* Center the image */
             transition: background-image 0.5s ease; /* Smooth transition for background changes */
         }
-        .hidden {
-            display: none;
-        }
         .input-container {
             display: flex;
             flex-direction: column;
@@ -63,12 +60,11 @@
             opacity: 0; /* Start as invisible */
             animation: fadeIn 1s forwards, slideIn 0.5s forwards; /* Animation classes */
             padding: 20px; /* Padding for text */
-            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
             border-radius: 10px; /* Rounded corners */
         }
         h1, p {
             margin: 20px;
-            z-index: 2; /* Ensure text is above the background */
         }
         .footer {
             position: absolute;
