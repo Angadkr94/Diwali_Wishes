@@ -12,22 +12,43 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            transition: background-color 0.5s;
+            background-color: #282c34;
             color: white;
             text-align: center;
             font-family: Arial, sans-serif;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 10px 0;
         }
         .button {
-        margin: 10px;
-        padding: 10px 20px;
-        background-color: #ff9800; /* Change to a vibrant orange */
-        border: none;
-        color: white;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-
+        .button:hover {
+            background-color: #fb8c00;
+        }
+        .main-content {
+            display: none; /* Initially hidden */
+        }
         h1 {
             margin: 20px;
         }
@@ -35,36 +56,29 @@
             font-size: 1.2rem;
             margin: 20px;
         }
-        .update-name {
+        .footer {
             position: absolute;
             top: 20px;
             right: 20px;
-            padding: 10px;
-            background-color: #ff9800;
-            border: none;
             color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .name-input {
-            display: none;
-            margin: 20px;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="header">Wish Happy Diwali, <span id="name">Ankit</span>!</h1>
-    <p id="text">This is a celebration of lights and joy!</p>
-    
-    <button class="button" onclick="changeBackground()">Change Background</button>
-    <button class="button" onclick="changeText()">More Wishes</button>
-    
-    <button class="update-name" onclick="openNameInput()">Update Name</button>
-    
-    <div class="name-input" id="nameInputContainer">
-        <input type="text" id="nameInput" placeholder="Enter new name" />
-        <button class="button" onclick="updateName()">Save</button>
+    <div class="footer">Created by @nkit</div>
+
+    <div class="input-container" id="inputContainer">
+        <input type="text" id="nameInput" placeholder="Enter your name" />
+        <button class="button" onclick="saveName()">Save</button>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <h1 id="header">Wish Happy Diwali, <span id="name">Ankit</span>!</h1>
+        <p id="text">This is a celebration of lights and joy!</p>
+        <button class="button" onclick="changeBackground()">Change Background</button>
+        <button class="button" onclick="changeText()">More Wishes</button>
     </div>
 
     <script>
@@ -93,43 +107,51 @@
             "Wishing you a Diwali filled with beautiful beginnings, new hopes, and lots of happy moments. May your life be as colourful and bright as the rangoli!",
         ];
 
+        const colors = [
+            "#FF5733", // Vibrant Red
+            "#33FF57", // Vibrant Green
+            "#3357FF", // Vibrant Blue
+            "#F1C40F", // Vibrant Yellow
+            "#9B59B6", // Vibrant Purple
+            "#E74C3C", // Vibrant Pink
+            "#1ABC9C", // Vibrant Turquoise
+            "#34495E", // Dark Blue
+        ];
+
         let currentBackgroundIndex = 0;
         let currentTextIndex = 0;
 
         function changeBackground() {
             currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
             document.body.style.backgroundImage = `url(${backgrounds[currentBackgroundIndex]})`;
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
+            changeTextColor();
         }
 
         function changeText() {
             currentTextIndex = (currentTextIndex + 1) % texts.length;
             document.getElementById('text').innerText = texts[currentTextIndex];
-            document.body.style.color = getRandomColor();
-            document.getElementById('header').style.color = getRandomColor();
+            changeTextColor();
         }
 
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        function openNameInput() {
-            document.getElementById('nameInputContainer').style.display = 'block';
-            document.getElementById('nameInput').value = ''; // Clear the input
-        }
-
-        function updateName() {
+        function saveName() {
             const newName = document.getElementById('nameInput').value;
             if (newName) {
                 document.getElementById('name').innerText = newName; // Update name in header
-                document.getElementById('nameInputContainer').style.display = 'none'; // Hide input after saving
+                document.getElementById('header').style.color = getRandomColor(); // Change header color
+                document.getElementById('inputContainer').style.display = 'none'; // Hide input container
+                document.getElementById('mainContent').style.display = 'block'; // Show main content
+                changeTextColor(); // Change text color on save
             }
+        }
+
+        function changeTextColor() {
+            const randomColor = getRandomColor();
+            document.getElementById('header').style.color = randomColor;
+            document.getElementById('text').style.color = randomColor;
+        }
+
+        function getRandomColor() {
+            return colors[Math.floor(Math.random() * colors.length)];
         }
 
         // Initial setup
