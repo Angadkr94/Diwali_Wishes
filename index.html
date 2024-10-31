@@ -12,15 +12,22 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #282c34;
             color: white;
             text-align: center;
             font-family: Arial, sans-serif;
-            background-size: contain; /* Change to contain */
-            background-position: center;
-            background-repeat: no-repeat; /* Prevent repetition */
             position: relative;
             overflow: hidden;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Send background to the back */
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease; /* Smooth transition for background changes */
         }
         .hidden {
             display: none;
@@ -53,6 +60,8 @@
         .main-content {
             display: none; /* Initially hidden */
             z-index: 2; /* Ensure main content is above the background */
+            opacity: 0; /* Start as invisible */
+            animation: fadeIn 1s forwards, slideIn 0.5s forwards; /* Animation classes */
         }
         h1, p {
             margin: 20px;
@@ -66,9 +75,22 @@
             font-size: 0.8rem;
             z-index: 2; /* Ensure footer is above the background */
         }
+
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
+
+    <div class="background" id="background"></div>
 
     <div class="footer">Created by @nkit</div>
 
@@ -126,7 +148,7 @@
 
         function changeBackground() {
             currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
-            document.body.style.backgroundImage = `url(${backgrounds[currentBackgroundIndex]})`;
+            document.getElementById('background').style.backgroundImage = `url(${backgrounds[currentBackgroundIndex]})`;
             changeTextColor();
         }
 
@@ -143,7 +165,9 @@
                 document.getElementById('header').style.color = getRandomColor(); // Change header color
                 document.getElementById('inputContainer').style.display = 'none'; // Hide input container
                 document.getElementById('mainContent').style.display = 'block'; // Show main content
+                document.getElementById('mainContent').style.opacity = 1; // Make it visible
                 changeTextColor(); // Change text color on save
+                changeBackground(); // Change background to initial image
             }
         }
 
